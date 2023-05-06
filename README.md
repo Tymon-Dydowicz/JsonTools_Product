@@ -18,3 +18,6 @@ Perhaps in the future will be accessible through custom made GUI to ease the usa
 
 ## Badges and Tests
 None for now
+
+## Work Hygiene
+When working on a new feature/functionality one is asked to create a new branch from the 'dev' branch and name it after the worked on feature. When you think that the feature is ready merge it into 'dev' and wait for review, if it seems fine the merge will go through and we will be able to create test for it and then if we are sure everything is alright we will merge it into 'main' branch which serves as our production and target for CI. For a pull request to go through it needs to be review and accepted by at least 2 different collaborators to avoid stupid mistakes
