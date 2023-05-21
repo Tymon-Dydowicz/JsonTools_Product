@@ -7,6 +7,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import pl.put.poznan.transformer.logic.Minificator;
 
 @RestController
 @RequestMapping("/minification")
@@ -44,13 +45,11 @@ public class JsonMinificationEndpoint {
         ObjectNode responseJson = objectMapper.createObjectNode();
 
         try {
-            // TODO Call the minify function from the logic directory
-            // For example:
-            // MinifyLogic minifyLogic = new MinifyLogic();
-            // String minifiedText = minifyLogic.minify(text);
-            String minifiedText = "PLACEHOLDER FOR MINIFIED JSON TEXT";
+            responseJson.put("textBefore", textToMinify);
+            Minificator minificator = new Minificator();
+            String minifiedText = minificator.minifyJson(textToMinify);
 
-            responseJson.put("text", minifiedText);
+            responseJson.put("textAfter", minifiedText);
 
             return ResponseEntity.ok(responseJson.toString());
         } catch (Exception e) {
