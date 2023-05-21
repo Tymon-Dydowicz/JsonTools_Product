@@ -8,6 +8,13 @@ import com.fasterxml.jackson.databind.node.ObjectNode;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * This class is responsible for selecting keys from JSON text
+ * It uses Jackson library
+ *
+ * @version 1.0
+ * @since 4.0
+ */
 public class JsonSelectingKeys {
     private ObjectMapper objectMapper;
 
@@ -15,6 +22,13 @@ public class JsonSelectingKeys {
         this.objectMapper = new ObjectMapper();
     }
 
+    /**
+     * This function is responsible for selecting keys from JSON text
+     *
+     * @param json          text that is to be processed
+     * @param keysToSelect  keys that are to be selected
+     * @return Json in its unminified format
+     */
     public String selectKeys(String json, String[] keysToSelect) throws JsonProcessingException {
         if (json == null) {
             throw new IllegalArgumentException("JSON string cannot be null");
