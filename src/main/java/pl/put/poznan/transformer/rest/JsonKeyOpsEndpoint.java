@@ -13,6 +13,9 @@ import pl.put.poznan.transformer.logic.JsonSelectingKeys;
 
 import java.util.Arrays;
 
+/**
+ * The class is a REST controller which contains endpoints for JSON key selection and omission.
+ */
 @RestController
 @RequestMapping("/keyops")
 public class JsonKeyOpsEndpoint {
