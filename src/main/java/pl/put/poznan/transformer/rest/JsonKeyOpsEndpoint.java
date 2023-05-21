@@ -8,6 +8,10 @@ import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import pl.put.poznan.transformer.logic.JsonDeletingKeys;
+import pl.put.poznan.transformer.logic.JsonSelectingKeys;
+
+import java.util.Arrays;
 
 @RestController
 @RequestMapping("/keyops")
@@ -15,41 +19,66 @@ public class JsonKeyOpsEndpoint {
 
     private static final Logger logger = LoggerFactory.getLogger(JsonKeyOpsEndpoint.class);
 
-    @RequestMapping(value = "/select/{key}", method = {RequestMethod.GET, RequestMethod.POST}, produces = "application/json")
-    public ResponseEntity<String> handleJsonKeySelectRequest(@PathVariable String key, @RequestBody String jsonBody) {
+    /**
+     * Handles the JSON key selection request and returns the selected key as a JSON response.
+     *
+     * @param keys     the keys to select
+     * @param jsonBody the JSON body
+     * @return the selected key as a JSON response or BAD REQUEST error
+     */
+    @RequestMapping(value = "/select", method = {RequestMethod.GET, RequestMethod.POST}, produces = "application/json")
+    public ResponseEntity<String> handleJsonKeySelectRequest(@RequestParam("keys") String[] keys, @RequestBody String jsonBody) {
         // log the parameters
-        logger.debug("Key: {}", key);
+        logger.debug("Keys: {}", Arrays.toString(keys));
         logger.debug("JSON Body: {}", jsonBody);
 
-        return performJsonKeySelect(key, jsonBody);
+        // Validate the keys parameter
+        if (keys == null || keys.length == 0) {
+            throw new IllegalArgumentException("At least one key must be provided.");
+        }
+
+        return performJsonKeySelect(keys, jsonBody);
     }
 
-    @RequestMapping(value = "/omit/{key}", method = {RequestMethod.GET, RequestMethod.POST}, produces = "application/json")
-    public ResponseEntity<String> handleJsonKeyOmitRequest(@PathVariable String key, @RequestBody String jsonBody) {
+    /**
+     * Handles the JSON key selection request and returns the selected key as a JSON response.
+     *
+     * @param keys     the keys to select
+     * @param jsonBody the JSON body
+     * @return the selected key as a JSON response or BAD REQUEST error
+     */
+    @RequestMapping(value = "/omit", method = {RequestMethod.GET, RequestMethod.POST}, produces = "application/json")
+    public ResponseEntity<String> handleJsonKeyOmitRequest(@RequestParam("keys") String[] keys, @RequestBody String jsonBody) {
         // log the parameters
-        logger.debug("Key: {}", key);
+        logger.debug("Keys: {}", Arrays.toString(keys));
         logger.debug("JSON Body: {}", jsonBody);
 
-        return performJsonKeyOmit(key, jsonBody);
+        // Validate the keys parameter
+        if (keys == null || keys.length == 0) {
+            throw new IllegalArgumentException("At least one key must be provided.");
+        }
+
+        return performJsonKeyOmit(keys, jsonBody);
     }
 
     /**
      * Selects the specified key from the JSON and returns it as a JSON response.
      *
-     * @param key      the key to select
+     * @param keys     the keys to select
      * @param jsonBody the JSON body
      * @return the selected key as a JSON response or BAD REQUEST error
      */
-    public ResponseEntity<String> performJsonKeySelect(String key, String jsonBody) {
+    public ResponseEntity<String> performJsonKeySelect(String[] keys, String jsonBody) {
         // Create JSON response
         ObjectMapper objectMapper = new ObjectMapper();
         ObjectNode responseJson = objectMapper.createObjectNode();
 
         try {
 
-            String selectedNodes = "PLACEHOLDER FOR SELECTED NODES";
+            JsonSelectingKeys selectingKeys = new JsonSelectingKeys();
+            String modifiedJson = selectingKeys.selectKeys(jsonBody, keys);
 
-            responseJson.put(key, selectedNodes);
+            responseJson.put("selectedNodes", modifiedJson);
 
             return ResponseEntity.ok(responseJson.toString());
         } catch (Exception e) {
@@ -61,17 +90,18 @@ public class JsonKeyOpsEndpoint {
     /**
      * Omits the specified key from the JSON and returns the modified JSON as a response.
      *
-     * @param key      the key to omit
+     * @param keys     the keys to omit
      * @param jsonBody the JSON body
      * @return the modified JSON as a JSON response or BAD REQUEST error
      */
-    public ResponseEntity<String> performJsonKeyOmit(String key, String jsonBody) {
+    public ResponseEntity<String> performJsonKeyOmit(String[] keys, String jsonBody) {
         // Create JSON response
         ObjectMapper objectMapper = new ObjectMapper();
         ObjectNode responseJson = objectMapper.createObjectNode();
 
         try {
-            String modifiedJson = "PLACEHOLDER MODIFIED JSON";
+            JsonDeletingKeys jsonDeletingKeys = new JsonDeletingKeys();
+            String modifiedJson = jsonDeletingKeys.deleteKeys(jsonBody, keys);
 
             responseJson.put("result", modifiedJson);
 
@@ -81,4 +111,7 @@ public class JsonKeyOpsEndpoint {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(responseJson.toString());
         }
     }
+
+
+
 }
