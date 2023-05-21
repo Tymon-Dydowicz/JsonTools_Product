@@ -7,6 +7,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import pl.put.poznan.transformer.logic.JsonComparator;
+import pl.put.poznan.transformer.logic.JsonDeletingKeys;
 
 import java.util.Map;
 
@@ -65,9 +67,10 @@ public class JsonDiffEndpoint {
         ObjectMapper objectMapper = new ObjectMapper();
         ObjectNode responseJson = objectMapper.createObjectNode();
 
+
         try {
-            // TODO: Implement the text difference finding logic
-            String difference = "PLACEHOLDER FOR TEXT DIFFERENCE";
+            JsonComparator jsonComparator = new JsonComparator();
+            String difference = jsonComparator.compareJson(text1, text2);
 
             responseJson.put("difference", difference);
 
