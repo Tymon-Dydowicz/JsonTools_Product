@@ -6,6 +6,13 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 
+/**
+ * This class is responsible for deleting keys from JSON text
+ * It uses Jackson library
+ *
+ * @version 1.0
+ * @since 4.0
+ */
 public class JsonDeletingKeys {
     private ObjectMapper objectMapper;
 
@@ -13,6 +20,13 @@ public class JsonDeletingKeys {
         this.objectMapper = new ObjectMapper();
     }
 
+    /**
+     * This function is responsible for deleting keys from JSON text
+     *
+     * @param json          text that is to be processed
+     * @param keysToRemove  keys that are to be deleted
+     * @return Json in its unminified format
+     */
     public String deleteKeys(String json, String[] keysToRemove) throws JsonProcessingException {
         if (json == null) {
             throw new IllegalArgumentException("JSON string cannot be null");
