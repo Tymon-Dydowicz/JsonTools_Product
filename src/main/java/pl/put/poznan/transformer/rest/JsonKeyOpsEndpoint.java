@@ -41,11 +41,11 @@ public class JsonKeyOpsEndpoint {
     }
 
     /**
-     * Handles the JSON key selection request and returns the selected key as a JSON response.
+     * Handles the omit request of specified keys from the JSON and returns the modified JSON as a response.
      *
-     * @param keys     the keys to select
+     * @param keys     the keys to omit
      * @param jsonBody the JSON body
-     * @return the selected key as a JSON response or BAD REQUEST error
+     * @return the modified JSON as a JSON response or BAD REQUEST error
      */
     @RequestMapping(value = "/omit", method = {RequestMethod.GET, RequestMethod.POST}, produces = "application/json")
     public ResponseEntity<String> handleJsonKeyOmitRequest(@RequestParam("keys") String[] keys, @RequestBody String jsonBody) {
@@ -68,7 +68,7 @@ public class JsonKeyOpsEndpoint {
      * @param jsonBody the JSON body
      * @return the selected key as a JSON response or BAD REQUEST error
      */
-    public ResponseEntity<String> performJsonKeySelect(String[] keys, String jsonBody) {
+    private ResponseEntity<String> performJsonKeySelect(String[] keys, String jsonBody) {
         // Create JSON response
         ObjectMapper objectMapper = new ObjectMapper();
         ObjectNode responseJson = objectMapper.createObjectNode();
@@ -94,7 +94,7 @@ public class JsonKeyOpsEndpoint {
      * @param jsonBody the JSON body
      * @return the modified JSON as a JSON response or BAD REQUEST error
      */
-    public ResponseEntity<String> performJsonKeyOmit(String[] keys, String jsonBody) {
+    private ResponseEntity<String> performJsonKeyOmit(String[] keys, String jsonBody) {
         // Create JSON response
         ObjectMapper objectMapper = new ObjectMapper();
         ObjectNode responseJson = objectMapper.createObjectNode();
