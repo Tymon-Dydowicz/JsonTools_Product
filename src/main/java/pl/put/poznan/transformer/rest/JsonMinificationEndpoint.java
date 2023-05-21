@@ -9,6 +9,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import pl.put.poznan.transformer.logic.Minificator;
 
+/**
+ * The class is a REST controller which contains endpoints for JSON minification and de-minification.
+ */
 @RestController
 @RequestMapping("/minification")
 public class JsonMinificationEndpoint {
@@ -85,6 +88,12 @@ public class JsonMinificationEndpoint {
         }
     }
 
+    /**
+     * De-minify text and return it in a JSON-compatible form
+     *
+     * @param textToDeMinify text that is to be de-minified
+     * @return de-minified text as a JSON response or BAD REQUEST error
+     */
     public ResponseEntity<String> callDeMinifyCreateResponse(String textToDeMinify) {
         // Create JSON response
         ObjectMapper objectMapper = new ObjectMapper();

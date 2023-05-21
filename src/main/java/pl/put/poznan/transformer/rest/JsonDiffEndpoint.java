@@ -12,6 +12,9 @@ import pl.put.poznan.transformer.logic.JsonDeletingKeys;
 
 import java.util.Map;
 
+/*
+* The class is a REST controller which contains endpoints for finding differences between JSON files.
+*/
 @RestController
 @RequestMapping("/diff")
 public class JsonDiffEndpoint {
