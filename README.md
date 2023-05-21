@@ -17,6 +17,7 @@ Perhaps in the future will be accessible through custom made GUI to ease the usa
 [Dominika Plewińska]() | GUI Expert 
 
 ## Badges and Tests
+![Version](https://img.shields.io/badge/version-1.0.0-blue.svg) \
 ![Jar Build and Tests](https://github.com/Tymon-Dydowicz/JsonTools_Product/actions/workflows/maven.yml/badge.svg) \
 ![JavaDoc Generation](https://github.com/Tymon-Dydowicz/JsonTools_Product/actions/workflows/javaDoc.yml/badge.svg)
 
