@@ -1,0 +1,6 @@
+pl\put\poznan\transformer\rest\JsonDiffEndpoint.class
+pl\put\poznan\transformer\rest\MainEndpoint.class
+pl\put\poznan\transformer\app\TextTransformerApplication.class
+pl\put\poznan\transformer\rest\JsonKeyOpsEndpoint.class
+pl\put\poznan\transformer\rest\JsonMinificationEndpoint.class
+pl\put\poznan\transformer\logic\TextTransformer.class
