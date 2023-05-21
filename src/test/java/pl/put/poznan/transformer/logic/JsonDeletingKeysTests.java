@@ -4,6 +4,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import pl.put.poznan.transformer.logic.JsonDeletingKeys;
 
 public class JsonDeletingKeysTests {
 

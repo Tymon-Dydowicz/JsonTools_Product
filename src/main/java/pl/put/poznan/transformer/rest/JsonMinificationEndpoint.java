@@ -15,21 +15,48 @@ public class JsonMinificationEndpoint {
 
     private static final Logger logger = LoggerFactory.getLogger(MainEndpoint.class);
 
-    @RequestMapping(value = "/minify/{text}", method = {RequestMethod.GET, RequestMethod.POST}, produces = "application/json")
-    public ResponseEntity<String> handleMinifyRequest(@PathVariable String text) {
-        // log the parameters
-        logger.debug(text);
+    /**
+     * Handles the minify request by logging the request body, and calling
+     * callMinifyCreateResponse to perform JSON minification.
+     *
+     * @param json The JSON string to be minified.
+     * @return The JSON response containing the minified JSON string.
+     */
+    @RequestMapping(value = "/minify", method = RequestMethod.POST, consumes = "application/json", produces = "application/json")
+    public ResponseEntity<String> handleMinifyRequest(@RequestBody String json) {
+        // Example usage:
+        // POST /minify
+        // Content-Type: application/json
+        // Request Body:
+        // {
+        //   "name": "John",
+        //   "age": 30
+        // }
+        // Log the request body
+        logger.debug(json);
 
-        return callMinifyCreateResponse(text);
+        return callMinifyCreateResponse(json);
     }
 
 
-    @RequestMapping(value = "/deminify/{text}", method = RequestMethod.GET, produces = "application/json")
-    public ResponseEntity<String> handleDeMinifyRequest(@PathVariable String text) {
-        // log the parameters
-        logger.debug(text);
+    /**
+     * Handles the de-minify request by logging the request body, and calling
+     * callDeMinifyCreateResponse to perform JSON de-minification.
+     *
+     * @param json The JSON string to be de-minified.
+     * @return The JSON response containing the de-minified JSON string.
+     */
+    @RequestMapping(value = "/deminify", method = RequestMethod.POST, consumes = "application/json", produces = "application/json")
+    public ResponseEntity<String> handleDeMinifyRequest(@RequestBody String json) {
+        // Example usage:
+        // POST /deminify
+        // Content-Type: application/json
+        // Request Body:
+        // "{\"name\":\"John\",\"age\":30}"
+        // Log the request body
+        logger.debug(json);
 
-        return callDeMinifyCreateResponse(text);
+        return callDeMinifyCreateResponse(json);
     }
 
 
