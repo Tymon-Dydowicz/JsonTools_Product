@@ -61,7 +61,7 @@ class MinificatorTest {
     @Test
     public void testUnMinifyJSON_wrongOutput() throws JsonProcessingException {
         String json = "{\"name\":\"John\",\"age\":30,\"city\":\"New York\"}";
-        String expectedJson = "{\r\n  \"name\" : \"John\",\r\n  \"age\" : 30,\r\n  \"city\" : \"New York\"\r\n}";
+        String expectedJson = "{\n  \"name\" : \"John\",\n  \"age\" : 30,\n  \"city\" : \"New York\"\n}";
 
         String resultJson = minifi.unMinifyJson(json);
         Assertions.assertEquals(expectedJson, resultJson);
