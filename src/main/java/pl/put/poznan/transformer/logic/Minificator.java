@@ -3,6 +3,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.util.DefaultIndenter;
 import com.fasterxml.jackson.core.util.DefaultPrettyPrinter;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.ObjectWriter;
 import com.fasterxml.jackson.databind.SerializationFeature;
 
 /**
@@ -32,14 +33,14 @@ public class Minificator {
     /**
      * This function is responsible for reversing minification of JSON text
      *
-     * @param JsonText text that is to be unminified
+     * @param jsonText text that is to be unminified
      * @return Json in its unminified format
      */
-    public String unMinifyJson(String JsonText) throws JsonProcessingException {
+    public String unMinifyJson(String jsonText) throws JsonProcessingException {
         ObjectMapper objectMapper = new ObjectMapper();
-        DefaultPrettyPrinter prettyPrinter = new DefaultPrettyPrinter();
-        prettyPrinter.indentArraysWith(DefaultIndenter.SYSTEM_LINEFEED_INSTANCE);
-        Object unMinifiedJson = objectMapper.readValue(JsonText, Object.class);
-        return objectMapper.writer(prettyPrinter).writeValueAsString(unMinifiedJson);
+        objectMapper.enable(SerializationFeature.INDENT_OUTPUT);
+        Object unMinifiedJson = objectMapper.readValue(jsonText, Object.class);
+        ObjectWriter writer = objectMapper.writerWithDefaultPrettyPrinter();
+        return writer.writeValueAsString(unMinifiedJson);
     }
 }

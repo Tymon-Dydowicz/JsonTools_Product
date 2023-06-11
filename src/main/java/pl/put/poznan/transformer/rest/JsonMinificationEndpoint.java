@@ -100,13 +100,11 @@ public class JsonMinificationEndpoint {
         ObjectNode responseJson = objectMapper.createObjectNode();
 
         try {
-            // TODO Call the deminify function from the logic directory
-            // For example:
-            // DeminifyLogic deminifyLogic = new DeminifyLogic();
-            // String deminifiedText = deminifyLogic.deminify(textToDeminify);
-            String deminifiedText = "PLACEHOLDER FOR DEMINIFIED JSON TEXT";
+            responseJson.put("textBefore", textToDeMinify);
+            Minificator minificator = new Minificator();
+            String minifiedText = minificator.minifyJson(textToDeMinify);
 
-            responseJson.put("text", deminifiedText);
+            responseJson.put("textAfter", minifiedText);
 
             return ResponseEntity.ok(responseJson.toString());
         } catch (Exception e) {
