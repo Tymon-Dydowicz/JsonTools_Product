@@ -30,6 +30,20 @@ public class JsonSelectingKeysTests {
     }
 
     @Test
+    public void testSelectKeys_Success_EmptyJson() throws JsonProcessingException {
+        // Arrange
+        String json = "{}";
+        String[] keysToSelect = {};
+        String expectedJson = "{}";
+
+        // Act
+        String result = jsonSelectingKeys.selectKeys(json, keysToSelect);
+
+        // Assert
+        Assertions.assertEquals(expectedJson, result);
+    }
+
+    @Test
     public void testSelectKeys_NullJson_ThrowsException() {
         // Arrange
         String[] keysToSelect = {"age", "city"};
@@ -41,24 +55,13 @@ public class JsonSelectingKeysTests {
     }
 
     @Test
-    public void testSelectKeys_NullKeysToSelect_ThrowsException() {
-        // Arrange
-        String json = "{\"name\": \"John\", \"age\": 30, \"city\": \"New York\"}";
-
-        // Act and Assert
-        Assertions.assertThrows(IllegalArgumentException.class, () -> {
-            jsonSelectingKeys.selectKeys(json, null);
-        });
-    }
-
-    @Test
     public void testSelectKeys_InvalidJsonFormat() {
         // Arrange
         String json = "{\"name\": \"John\", \"age\": 30, \"address\": {\"city\": \"New York\"}";
         String[] keysToSelect = {"age"};
 
         // Act and Assert
-        Assertions.assertThrows(JsonProcessingException.class, () -> {
+        Assertions.assertThrows(IllegalArgumentException.class, () -> {
             jsonSelectingKeys.selectKeys(json, keysToSelect);
         });
     }

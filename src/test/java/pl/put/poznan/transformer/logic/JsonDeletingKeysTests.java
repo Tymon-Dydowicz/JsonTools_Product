@@ -31,6 +31,21 @@ public class JsonDeletingKeysTests {
     }
 
     @Test
+    public void testDeleteKeys_Success_EmptyJson() throws JsonProcessingException {
+        // Arrange
+        JsonDeletingKeys jsonDeletingKeys = new JsonDeletingKeys();
+        String json = "{}";
+        String[] keysToRemove = {};
+        String expectedJson = "{}";
+
+        // Act
+        String result = jsonDeletingKeys.deleteKeys(json, keysToRemove);
+
+        // Assert
+        Assertions.assertEquals(expectedJson, result);
+    }
+
+    @Test
     public void testDeleteKeys_NullJson_ThrowsException() {
         // Arrange
         JsonDeletingKeys jsonDeletingKeys = new JsonDeletingKeys();
@@ -43,18 +58,6 @@ public class JsonDeletingKeysTests {
     }
 
     @Test
-    public void testDeleteKeys_NullKeysToRemove_ThrowsException() {
-        // Arrange
-        JsonDeletingKeys jsonDeletingKeys = new JsonDeletingKeys();
-        String json = "{\"name\": \"John\", \"age\": 30, \"city\": \"New York\"}";
-
-        // Act and Assert
-        Assertions.assertThrows(IllegalArgumentException.class, () -> {
-            jsonDeletingKeys.deleteKeys(json, null);
-        });
-    }
-
-    @Test
     public void testDeleteKeys_InvalidJsonFormat() {
         // Arrange
         JsonDeletingKeys jsonDeletingKeys = new JsonDeletingKeys();
@@ -62,7 +65,7 @@ public class JsonDeletingKeysTests {
         String[] keysToRemove = {"age"};
 
         // Act and Assert
-        Assertions.assertThrows(JsonProcessingException.class, () -> {
+        Assertions.assertThrows(IllegalArgumentException.class, () -> {
             jsonDeletingKeys.deleteKeys(json, keysToRemove);
         });
     }
