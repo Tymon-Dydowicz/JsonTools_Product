@@ -13,7 +13,7 @@ import com.fasterxml.jackson.databind.node.ObjectNode;
  * @version 1.0
  * @since 4.0
  */
-public class JsonDeletingKeys {
+public class JsonDeletingKeys  implements JsonLogicDecorator{
     private ObjectMapper objectMapper;
 
     public JsonDeletingKeys() {
@@ -27,17 +27,14 @@ public class JsonDeletingKeys {
      * @param keysToRemove  keys that are to be deleted
      * @return Json in its unminified format
      */
-    public String deleteKeys(String json, String[] keysToRemove) throws JsonProcessingException {
-        if (json == null) {
-            throw new IllegalArgumentException("JSON string cannot be null");
-        }
-
-        if (keysToRemove == null) {
-            throw new IllegalArgumentException("Keys to remove cannot be null");
-        }
-
+    public String deleteKeys(String json, String[] keysToRemove) throws IllegalArgumentException {
         ObjectMapper objectMapper = new ObjectMapper();
-        JsonNode rootNode = objectMapper.readTree(json);
+        JsonNode rootNode = null;
+        try {
+            rootNode = objectMapper.readTree(json);
+        } catch (JsonProcessingException e) {
+            throw new IllegalArgumentException("invalid JSON argument!");
+        }
         removeKeys(rootNode, keysToRemove);
         return rootNode.toString();
     }
@@ -57,5 +54,17 @@ public class JsonDeletingKeys {
             }
         }
         // Ignore other node types (e.g., strings, numbers, booleans)
+    }
+
+    /**
+     * This function calls deleteKeys method to delete keys from given json string
+     * @param json json string to convert
+     * @param keysToSelect list of keys that are to be selected for deletion
+     * @return string
+     * @throws IllegalArgumentException
+     */
+    @Override
+    public String processJson(String json, String[] keysToSelect) throws IllegalArgumentException {
+        return deleteKeys(json, keysToSelect);
     }
 }
