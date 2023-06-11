@@ -41,6 +41,10 @@ public class JsonLogicDecoratorImpl implements JsonLogicDecorator{
             throw new IllegalArgumentException("Invalid JSON argument!");
         }
 
+        if(keysToSelect == null){
+            throw new IllegalArgumentException("Keys are nulll!");
+        }
+
         return this.decoratedObject.processJson(json, keysToSelect);
     }
 }
