@@ -79,7 +79,7 @@ public class Gui extends JFrame {
             try {
                 output = jsonSelectingKeys.selectKeys(input1, input2split);
             } catch (JsonProcessingException ex) {
-                throw new RuntimeException(ex);
+                throw new IllegalArgumentException(ex);
             }
             outputText.setText(output);
         });
@@ -93,7 +93,7 @@ public class Gui extends JFrame {
             try {
                 output = jsonDeletingKeys.deleteKeys(input1, input2split);
             } catch (JsonProcessingException ex) {
-                throw new RuntimeException(ex);
+                throw new IllegalArgumentException(ex);
             }
             outputText.setText(output);
         });
