@@ -28,3 +28,10 @@ jobs:
       with:
         name: javadoc
         path: target/site/apidocs/
+    - name: Generate JAR file
+      run: mvn package --file pom.xml --batch-mode
+    - name: Upload JAR file
+      uses: actions/upload-artifact@v2
+      with:
+        name: jar
+        path: target/*.jar
