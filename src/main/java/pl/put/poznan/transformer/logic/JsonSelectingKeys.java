@@ -15,7 +15,7 @@ import java.util.List;
  * @version 1.0
  * @since 4.0
  */
-public class JsonSelectingKeys {
+public class JsonSelectingKeys implements JsonLogicDecorator {
     private ObjectMapper objectMapper;
 
     public JsonSelectingKeys() {
@@ -29,16 +29,13 @@ public class JsonSelectingKeys {
      * @param keysToSelect  keys that are to be selected
      * @return Json in its unminified format
      */
-    public String selectKeys(String json, String[] keysToSelect) throws JsonProcessingException {
-        if (json == null) {
-            throw new IllegalArgumentException("JSON string cannot be null");
+    public String selectKeys(String json, String[] keysToSelect) throws IllegalArgumentException {
+        JsonNode rootNode = null;
+        try {
+            rootNode = objectMapper.readTree(json);
+        } catch (JsonProcessingException e) {
+            throw new IllegalArgumentException("Invalid JSON structure!");
         }
-
-        if (keysToSelect == null) {
-            throw new IllegalArgumentException("Keys to select cannot be null");
-        }
-
-        JsonNode rootNode = objectMapper.readTree(json);
         selectKeys(rootNode, keysToSelect);
         return rootNode.toString();
     }
@@ -76,5 +73,10 @@ public class JsonSelectingKeys {
             }
         }
         return false;
+    }
+
+    @Override
+    public String processJson(String json, String[] keysToSelect)  throws IllegalArgumentException{
+        return selectKeys(json, keysToSelect);
     }
 }

@@ -9,6 +9,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import pl.put.poznan.transformer.logic.JsonDeletingKeys;
+import pl.put.poznan.transformer.logic.JsonLogicDecorator;
+import pl.put.poznan.transformer.logic.JsonLogicDecoratorImpl;
 import pl.put.poznan.transformer.logic.JsonSelectingKeys;
 
 import java.util.Arrays;
@@ -78,8 +80,8 @@ public class JsonKeyOpsEndpoint {
 
         try {
 
-            JsonSelectingKeys selectingKeys = new JsonSelectingKeys();
-            String modifiedJson = selectingKeys.selectKeys(jsonBody, keys);
+            JsonLogicDecorator decoratedService = new JsonLogicDecoratorImpl(new JsonSelectingKeys());
+            String modifiedJson = decoratedService.processJson(jsonBody, keys);
 
             responseJson.put("selectedNodes", modifiedJson);
 
@@ -103,8 +105,8 @@ public class JsonKeyOpsEndpoint {
         ObjectNode responseJson = objectMapper.createObjectNode();
 
         try {
-            JsonDeletingKeys jsonDeletingKeys = new JsonDeletingKeys();
-            String modifiedJson = jsonDeletingKeys.deleteKeys(jsonBody, keys);
+            JsonLogicDecorator decoratedService = new JsonLogicDecoratorImpl(new JsonDeletingKeys());
+            String modifiedJson = decoratedService.processJson(jsonBody, keys);
 
             responseJson.put("result", modifiedJson);
 
