@@ -76,11 +76,7 @@ public class Gui extends JFrame {
             String input2 = input2Text.getText();
             String[] input2split = input2.split("\n");
             String output = null;
-            try {
-                output = jsonSelectingKeys.selectKeys(input1, input2split);
-            } catch (JsonProcessingException ex) {
-                throw new IllegalArgumentException(ex);
-            }
+            output = jsonSelectingKeys.processJson(input1, input2split);
             outputText.setText(output);
         });
 
@@ -90,11 +86,7 @@ public class Gui extends JFrame {
             String input2 = input2Text.getText();
             String[] input2split = input2.split("\n");
             String output = null;
-            try {
-                output = jsonDeletingKeys.deleteKeys(input1, input2split);
-            } catch (JsonProcessingException ex) {
-                throw new IllegalArgumentException(ex);
-            }
+            output = jsonDeletingKeys.processJson(input1, input2split);
             outputText.setText(output);
         });
 
